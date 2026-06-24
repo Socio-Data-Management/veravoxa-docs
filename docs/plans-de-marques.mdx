@@ -1,0 +1,45 @@
+---
+sidebar_position: 6
+title: Plans de marques
+---
+
+# Plans de marques
+
+Un **plan de marques** sert à normaliser les noms de marques tels qu'ils sont cités spontanément par les répondants. Les verbatims contiennent souvent des variantes orthographiques, des abréviations ou des fautes : `MacDo`, `Mc Do`, `mcdonalds`, `McDonald's` doivent tous pointer vers la même marque de référence.
+
+## Créer un plan de marques
+
+Depuis le menu **Plans de marques**, cliquez sur **+ Nouveau plan**.
+
+Renseignez :
+- **Nom du plan** — ex. : `Marques fast-food France`
+- **Description** *(optionnel)*
+
+Ajoutez vos marques :
+- **Nom de référence** — la forme canonique qui apparaîtra dans les résultats (ex. `McDonald's`)
+- **Variantes** *(optionnel)* — formes alternatives connues pour aider l'IA (ex. `MacDo`, `Mc Do`, `mcdo`)
+
+## Exemple de plan de marques
+
+| Nom de référence | Variantes |
+|---|---|
+| McDonald's | MacDo, Mc Do, mcdo, macdonald |
+| Burger King | BK, Burger king |
+| KFC | kfc, Kentucky |
+| Quick | — |
+
+## Utiliser un plan dans une session
+
+Dans votre session, sélectionnez le service **Recodification de marques** et choisissez votre plan. Le fichier résultat contiendra une colonne normalisée avec les noms canoniques des marques détectées.
+
+Les verbatims dans lesquels aucune marque du plan n'est détectée conservent une cellule vide dans la colonne résultat.
+
+## Associer un plan à une question
+
+Vous pouvez pré-associer un plan de marques à une question de votre projet. Lors de la création d'une session, le plan sera présélectionné automatiquement pour cette question.
+
+## Conseils pour de bons résultats
+
+- **Privilégiez des noms de référence clairs et non ambigus.** L'IA comprend le sens des libellés, pas uniquement les variantes listées.
+- **Listez les variantes les plus fréquentes**, notamment les abréviations et les fautes typiques de vos panélistes.
+- **Évitez les doublons entre marques** : si deux entrées ont des variantes qui se chevauchent, les résultats peuvent être incohérents.

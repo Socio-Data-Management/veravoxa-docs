@@ -1,0 +1,55 @@
+---
+sidebar_position: 4
+title: Importer vos données
+---
+
+# Importer vos données
+
+VeraVoxa traite les fichiers **Excel uniquement** (`.xlsx` ou `.xls`). Ce format garantit une lecture fiable quelle que soit l'origine du fichier (export SPSS, Survey Monkey, Google Forms, Qualtrics…).
+
+## Format attendu
+
+| Contrainte | Détail |
+|---|---|
+| **Format** | `.xlsx` ou `.xls` uniquement |
+| **Colonnes minimum** | 2 colonnes : une colonne d'identifiant + au moins une colonne de verbatims |
+| **En-têtes** | La première ligne doit contenir les noms de colonnes |
+| **Encodage** | UTF-8 ou Latin-1, détecté automatiquement |
+| **Taille maximum** | 50 Mo par fichier |
+
+:::caution CSV et JSON non acceptés
+VeraVoxa n'accepte pas les fichiers CSV ou JSON. Si vos données sont dans ce format, ouvrez-les dans Excel et sauvegardez en `.xlsx` avant l'import.
+:::
+
+## Exemple de fichier bien formé
+
+| ID_Répondant | Q1_Satisfaction | Q2_Amélioration |
+|---|---|---|
+| 1001 | Le service était rapide et efficace | Améliorer l'application mobile |
+| 1002 | Très bonne qualité de l'accueil | Plus d'horaires le weekend |
+| 1003 | J'ai adoré la simplicité du processus | Rien à signaler |
+
+Dans cet exemple :
+- `ID_Répondant` est la colonne d'identifiant
+- `Q1_Satisfaction` et `Q2_Amélioration` sont les colonnes de verbatims
+
+## Importer un fichier
+
+1. Ouvrez votre projet dans VeraVoxa.
+2. Cliquez sur **Importer un fichier**.
+3. Glissez-déposez votre fichier ou cliquez pour parcourir.
+4. VeraVoxa affiche un aperçu des colonnes détectées. Vérifiez que tout est correct.
+5. Cliquez sur **Confirmer l'import**.
+
+Le fichier est maintenant disponible pour créer des sessions d'analyse.
+
+## Gérer vos fichiers
+
+Vos fichiers importés restent stockés dans le projet. Vous pouvez :
+- Importer plusieurs versions du même fichier (par vague, par segment…)
+- Réutiliser un fichier dans plusieurs sessions
+- Supprimer un fichier (attention : les sessions associées perdront leur accès au fichier source)
+
+## Minimum de verbatims requis
+
+Les services de codification nécessitent au moins **10 réponses non vides** dans la colonne traitée. En dessous de ce seuil, VeraVoxa vous en avertit à la création de la session.

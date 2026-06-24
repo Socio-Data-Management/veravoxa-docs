@@ -1,0 +1,67 @@
+---
+sidebar_position: 5
+title: Plans de codes
+---
+
+# Plans de codes
+
+Un **plan de codes** est la grille de catégories que VeraVoxa utilise pour classer vos verbatims. Chaque code représente un thème ou une idée (ex. : *Prix trop élevé*, *Service rapide*, *Problème de livraison*).
+
+## Créer un plan de codes
+
+Depuis le menu latéral, accédez à **Plans de codes** puis cliquez sur **+ Nouveau plan**.
+
+Renseignez :
+- **Nom du plan** — ex. : `Freins à l'achat – T2 2026`
+- **Description** *(optionnel)*
+
+Ajoutez ensuite vos codes un par un. Pour chaque code :
+- **Numéro** — identifiant numérique unique dans le plan (ex. `10`, `20`, `21`…)
+- **Libellé** — la catégorie telle qu'elle apparaîtra dans votre fichier de résultats
+- **Mots-clés** *(optionnel)* — termes indicatifs qui aident l'IA à reconnaître ce code
+
+:::tip Mots-clés non exhaustifs
+Les mots-clés sont des exemples, pas une liste fermée. L'IA comprend le sens général du libellé et ne se limite pas aux termes indiqués.
+:::
+
+## Exemple de plan de codes
+
+| N° | Libellé | Mots-clés |
+|---|---|---|
+| 10 | Prix trop élevé | cher, coûteux, tarif, budget |
+| 20 | Service rapide | rapide, délai, livraison, vite |
+| 21 | Service lent | lent, attente, délai, retard |
+| 30 | Qualité satisfaisante | bon, bien, qualité, satisfait |
+| 40 | Sans opinion | rien, sans avis, NSP |
+
+## Utiliser un plan dans une session
+
+Lors de la création d'une session, sélectionnez votre plan dans le champ **Plan de codes**. VeraVoxa attribuera automatiquement un ou plusieurs codes à chaque verbatim.
+
+Le fichier résultat contiendra une colonne supplémentaire avec les codes attribués (ex. `Q1_codification`) et, si l'option est activée, les libellés correspondants.
+
+## Modifier un plan existant
+
+Vous pouvez ajouter, renommer ou supprimer des codes à tout moment. Attention : les sessions déjà terminées ne sont pas rétroactivement mises à jour.
+
+## Générer un plan automatiquement (AutoPlan)
+
+Si vous n'avez pas encore de plan de codes, VeraVoxa peut en générer un à partir d'un échantillon de vos verbatims. Lors de la création d'une session, sélectionnez **Générer automatiquement un plan**. L'IA analyse un échantillon de verbatims et propose une liste de thèmes que vous pouvez ensuite affiner.
+
+### Importer le résultat AutoPlan comme plan de codes
+
+Une fois la session AutoPlan terminée, importez directement les thèmes proposés en plan de codes réutilisable :
+
+1. Depuis la page de la session, repérez le service **AutoPlan** (statut *Terminé*).
+2. Cliquez sur **Importer comme plan de code**.
+3. Dans la fenêtre :
+   - Saisissez un **nom** pour le plan (ex. : `Freins à l'achat – T2 2026`).
+   - Cochez **Ajouter les codes 98 et 99** pour inclure automatiquement les catégories *Autres* et *NSP*.
+   - Cochez **Associer ce plan à la question source** pour lier le plan à la question qui a servi à l'analyse — vous n'aurez pas à le re-sélectionner lors de la prochaine session de codification.
+4. Cliquez sur **Importer**.
+
+Le plan est créé avec la description *Plan de code automatique du JJ-MM-AAAA* et vous êtes redirigé vers l'éditeur pour l'affiner si besoin.
+
+:::tip Workflow recommandé
+**AutoPlan** → Importer comme plan de codes → affiner dans l'éditeur → lancer une session de **Codification** sur l'ensemble de vos données.
+:::

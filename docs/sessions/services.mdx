@@ -1,0 +1,108 @@
+---
+sidebar_position: 2
+title: Les services disponibles
+---
+
+# Les services disponibles
+
+VeraVoxa propose 7 services d'analyse que vous pouvez combiner librement dans une même session.
+
+---
+
+## Codification
+
+Classe chaque verbatim selon un **plan de codes** prédéfini. L'IA lit le verbatim, comprend son sens et lui attribue un ou plusieurs codes.
+
+**Ce que vous obtenez :** une nouvelle colonne avec le ou les numéros de codes attribués, et une colonne optionnelle avec les libellés correspondants.
+
+**Exemple :**
+
+| Verbatim | Code attribué | Libellé |
+|---|---|---|
+| Le délai de livraison était trop long | 21 | Service lent |
+| Très bonne qualité, je recommande | 30 | Qualité satisfaisante |
+| Le prix est raisonnable mais... | 10 | Prix trop élevé |
+
+:::tip AutoPlan
+Si vous n'avez pas encore de plan de codes, VeraVoxa peut en générer un automatiquement à partir de vos verbatims. Voir [Plans de codes](/plans-de-codes#générer-un-plan-automatiquement-autoplan).
+:::
+
+---
+
+## Analyse de sentiment
+
+Détermine la polarité émotionnelle de chaque verbatim : **positif**, **négatif** ou **neutre**.
+
+**Ce que vous obtenez :** une colonne avec le sentiment détecté pour chaque réponse.
+
+**Exemple :**
+
+| Verbatim | Sentiment |
+|---|---|
+| Service impeccable, je reviendrai ! | Positif |
+| Déçu par le temps d'attente | Négatif |
+| Livraison dans les délais prévus | Neutre |
+
+---
+
+## Recodification de marques
+
+Identifie et normalise les noms de marques cités dans les verbatims, en s'appuyant sur votre **plan de marques**.
+
+**Ce que vous obtenez :** une colonne avec les noms canoniques des marques détectées.
+
+**Exemple :**
+
+| Verbatim | Marque normalisée |
+|---|---|
+| J'ai testé le nouveau MacDo du coin | McDonald's |
+| Le BK près de chez moi est bien | Burger King |
+| Aucune marque en particulier | *(vide)* |
+
+---
+
+## Traduction
+
+Traduit les verbatims dans la langue cible de votre choix. Utile pour des enquêtes multilingues ou pour partager les résultats avec une équipe internationale.
+
+**Langues disponibles :** Anglais, Espagnol, Allemand, Italien, Portugais, et plus encore.
+
+**Ce que vous obtenez :** une colonne avec les verbatims traduits.
+
+---
+
+## Anonymisation
+
+Détecte et supprime (ou remplace) les **données personnelles** présentes dans les verbatims : noms, prénoms, adresses, numéros de téléphone, e-mails…
+
+**Ce que vous obtenez :** une colonne avec les verbatims anonymisés.
+
+**Exemple :**
+
+| Verbatim original | Verbatim anonymisé |
+|---|---|
+| Merci à Jean Dupont pour son aide | Merci à [PERSONNE] pour son aide |
+| Appelez le 06 12 34 56 78 | Appelez le [TÉLÉPHONE] |
+
+Vous pouvez choisir quels types de données personnelles anonymiser (noms, coordonnées, lieux…).
+
+---
+
+## Correction orthographique
+
+Corrige les fautes de frappe et les erreurs orthographiques avant d'appliquer d'autres services. Particulièrement utile sur des données saisies sur mobile ou issues de sources peu relues.
+
+**Ce que vous obtenez :** une colonne avec les verbatims corrigés.
+
+**Option néographie :** si vos verbatims contiennent du langage SMS (ex. *chui*, *tro*, *g pa*), activez cette option pour une meilleure normalisation.
+
+---
+
+## Enchaîner les services
+
+Certains services peuvent être enchaînés : la sortie de l'un devient l'entrée du suivant. Par exemple :
+
+1. **Correction orthographique** → produit les verbatims corrigés
+2. **Codification** → s'applique sur les verbatims corrigés (meilleure précision)
+
+Pour enchaîner, sélectionnez simplement les deux services dans la même session et indiquez l'ordre souhaité.

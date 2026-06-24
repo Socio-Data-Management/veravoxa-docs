@@ -1,0 +1,80 @@
+---
+sidebar_position: 3
+title: Créer une session
+---
+
+# Créer une session d'analyse
+
+Ce guide détaille chaque étape de la création d'une session, de la sélection du fichier jusqu'au lancement de l'analyse.
+
+## Accéder à la création d'une session
+
+Depuis votre projet, cliquez sur **Nouvelle session**. L'assistant de création s'ouvre.
+
+## Étape 1 — Choisir le fichier et les colonnes
+
+Sélectionnez le fichier que vous avez importé dans le projet. Une fois le fichier choisi, VeraVoxa affiche la liste de ses colonnes.
+
+Pour chaque colonne de verbatims à analyser :
+1. Cochez la colonne.
+2. Associez-la à la **question** correspondante dans votre projet.
+
+Vous pouvez sélectionner plusieurs colonnes si votre fichier contient plusieurs questions ouvertes.
+
+## Étape 2 — Choisir les services
+
+Cochez le ou les services à appliquer. Les options disponibles dépendent du service :
+
+### Codification
+- Sélectionnez un **plan de codes** existant, ou choisissez **Générer automatiquement**.
+- Activez **Inclure les libellés** si vous souhaitez une colonne supplémentaire avec les noms des codes (en plus des numéros).
+
+### Analyse de sentiment
+- Choisissez entre **3 niveaux** (Positif / Négatif / Neutre) ou **2 niveaux** (Positif / Négatif).
+
+### Recodification de marques
+- Sélectionnez le **plan de marques** à utiliser.
+
+### Traduction
+- Choisissez la **langue cible** dans la liste déroulante.
+
+### Anonymisation
+- Cochez les types de données à anonymiser : noms de personnes, numéros de téléphone, adresses e-mail, adresses postales, lieux, organismes, dates.
+
+### Correction orthographique
+- Activez **Mode néographie** si vos verbatims contiennent du langage SMS ou des abréviations informelles.
+
+## Étape 3 — Vérifier l'ordre des services (enchaînement)
+
+Si vous avez sélectionné plusieurs services, VeraVoxa vous propose de définir l'ordre d'exécution. Par exemple, placez la **correction orthographique** avant la **codification** pour de meilleurs résultats.
+
+Glissez-déposez les services pour les réordonner.
+
+## Étape 4 — Notifier par e-mail (optionnel)
+
+Vous pouvez renseigner une adresse e-mail de notification. VeraVoxa vous enverra un message dès que l'analyse sera terminée. Pratique pour les gros volumes qui prennent plusieurs minutes.
+
+## Étape 5 — Récapitulatif et paiement
+
+VeraVoxa affiche :
+- La liste des services sélectionnés
+- Le nombre de verbatims à traiter
+- Le **tarif total**
+
+Vérifiez le récapitulatif puis cliquez sur **Procéder au paiement**.
+
+### Visiteur (paiement immédiat)
+Vous êtes redirigé vers la page de paiement Stripe. Renseignez vos coordonnées bancaires. L'analyse démarre dès confirmation du paiement.
+
+### Compte commercial (facturation différée)
+Une demande d'approbation est envoyée à votre responsable. L'analyse démarrera après sa validation. Vous recevrez une facture en fin de période.
+
+## Étape 6 — Suivre la progression
+
+Depuis la page de votre session, vous voyez en temps réel l'avancement de chaque service. Pour les analyses sur de grands volumes (> 1 000 verbatims), comptez quelques minutes.
+
+Dès qu'un service est terminé, le bouton **Télécharger** devient actif — vous n'avez pas besoin d'attendre que tous les services soient finis pour récupérer les premiers résultats.
+
+---
+
+Prochaine étape : [Télécharger et lire les résultats](/sessions/resultats)

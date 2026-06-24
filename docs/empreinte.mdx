@@ -1,0 +1,176 @@
+---
+sidebar_position: 6
+title: Empreinte environnementale
+---
+
+# Empreinte environnementale
+
+VeraVoxa mesure et publie pour chaque session l'**empreinte énergétique et
+carbone réelle** de l'inférence. Le rapport PDF téléchargeable depuis la
+session compare cette empreinte à trois scénarios alternatifs pour donner
+un repère honnête de ce que coûte la même tâche ailleurs.
+
+## Cadre comptable
+
+Les calculs suivent le **[GHG Protocol Scope 2](https://ghgprotocol.org/corporate-standard)
+méthode location-based** : l'électricité consommée par l'inférence est
+multipliée par le facteur d'émission du mix électrique du lieu où tourne le
+GPU (RTE 2024 pour la France).
+
+Compatible avec la méthodologie **BEGES** (Bilan Émissions de Gaz à Effet de
+Serre, [article L229-25 du Code de l'environnement](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000031694281/))
+pour le scope 2.
+
+**Périmètre opérationnel uniquement** : on ne compte que l'énergie de
+fonctionnement (use phase). On **n'inclut pas** :
+- la fabrication et le transport du matériel GPU/serveur (Scope 3 amont)
+- l'amortissement du datacenter (climatisation, bâtiment)
+- la fin de vie du matériel (Scope 3 aval)
+
+À comparer avec le LCA Mistral cité plus bas, qui lui couvre l'ensemble du
+cycle de vie — d'où la différence d'ordre de grandeur entre nos chiffres
+mesurés et la baseline Mistral.
+
+## Ce qu'on mesure
+
+Pour chaque sub-job complété, le backend lit les logs du job-manager,
+extrait la durée écoulée entre la bascule `status=running` et
+`status=completed` (hors temps de queue), et calcule :
+
+```
+inferenceWh    = (TDP_W × secondes) / 3600
+inferenceCO2g  = inferenceWh × facteur_grid / 1000
+```
+
+Source : [`backend/src/common/footprint/footprint.ts`](../../veravoxa/backend/src/common/footprint/footprint.ts).
+
+Les 3 colonnes `inferenceSeconds`, `inferenceWh`, `inferenceCarbonG` sont
+persistées sur chaque `SessionJob` et exposées via l'API. Le PDF agrège la
+somme sur tous les jobs de la session.
+
+## Constantes utilisées par VeraVoxa
+
+| Paramètre | Valeur | Source |
+|---|---|---|
+| TDP en charge | **57 W** | `nvidia-smi` mesuré sur NVIDIA GB10 (Grace Blackwell 10) en charge inférence vLLM batché |
+| Mix électrique | **50 gCO₂e/kWh** | RTE 2024, moyenne annuelle du mix électrique français (essentiellement nucléaire + hydraulique) |
+
+Hypothèses délibérément **conservatrices** :
+- TDP majorant constant — la consommation réelle baisse pendant les phases
+  d'I/O et de batching
+- Mix RTE annuel moyen — l'inférence se faisant majoritairement en heures
+  creuses, le facteur réel est probablement plus bas
+
+## Scénarios comparés dans le rapport
+
+Le PDF présente la session sur 4 lignes, par ordre croissant d'empreinte :
+
+### 1. VeraVoxa — small GraceBlackwell (référence)
+
+Mesure réelle de la session. C'est le seul chiffre **directement mesuré**.
+
+### 2. Serveur cloud B300
+
+Hypothèse : la même session aurait tourné sur un rack DGX B200 (8× GPU B200)
+en datacenter européen moyen.
+
+| Paramètre | Valeur | Source |
+|---|---|---|
+| TDP rack total | ~14 kW | Spécifications NVIDIA DGX B200 |
+| **TDP par GPU actif** | **~1 750 W (= 14 kW / 8)** | **Voir note ci-dessous** |
+| Mix électrique | 300 gCO₂e/kWh | AIE 2024, moyenne européenne (mix gaz + nucléaire + renouvelables) |
+
+**Note sur la normalisation par GPU actif** : un rack DGX B200 traite la
+charge ~8× plus vite qu'un GB10 grâce à ses 8 GPU. Lui attribuer
+`14 kW × notre_durée` surestimerait sa conso d'un facteur 8 (on lui
+ferait payer la puissance des 7 GPU inutilisés). On normalise donc à
+**1 750 W équivalent par GPU actif**, ce qui revient à dire « 8 GPU
+pendant durée/8 », mathématiquement équivalent à « 1 GPU pendant la
+durée totale ».
+
+Hypothèse implicite : scaling linéaire du throughput avec le nombre de GPU
+(réaliste sur de l'inférence batchée ; en pratique sous-linéaire à ~0,7-0,9
+d'efficacité, donc notre estimation reste un majorant doux).
+
+Calcul : `(1750 × secondes / 3600) × 300 / 1000`.
+
+### 3. Mistral Large 2 via API (Azure FR/UE)
+
+Modèle frontier français hébergé en Europe. C'est la **meilleure baseline
+externe transparente** disponible aujourd'hui :
+
+- **0,57 gCO₂e par verbatim** (~200 tokens)
+
+Dérivation : Mistral a publié en octobre 2025 une [Life Cycle Assessment
+complète](https://mistral.ai/news/our-contribution-to-a-global-environmental-standard-for-ai)
+en partenariat avec **Carbone 4** et l'**ADEME** — premier (et toujours
+seul) gros labo à le faire. Chiffre publié : **1,14 gCO₂e par "page" de
+400 tokens** en inférence (training amorti inclus).
+
+Conversion : un cycle de codification d'un verbatim consomme ~200 tokens
+(prompt système + plan de code + verbatim en entrée, sortie courte) →
+`1,14 × 200/400 = 0,57 gCO₂e/verbatim`.
+
+### 4. GPT-4o / Claude Sonnet 4 via API (cloud US)
+
+Modèles frontier hébergés sur cloud US (Azure US / AWS / GCP). **Borne basse**
+défendable, méthodologie conservative :
+
+- **2,0 gCO₂e par verbatim** (≈ 3× la baseline Mistral)
+
+OpenAI et Anthropic ne publient **aucun** chiffre officiel. Les estimations
+de la communauté académique convergent dans une fourchette 2–5 g/verbatim :
+
+- [Patterson et al. 2021](https://arxiv.org/abs/2104.10350) — méthodologie
+  de référence ("Carbon Emissions and Large Neural Network Training")
+- [Hugging Face AI Energy Score](https://huggingface.co/AIEnergyScore) —
+  benchmark ouvert
+- [Stanford AI Index 2024](https://aiindex.stanford.edu/) — rapport annuel
+
+On retient **2 g** comme borne basse pour ne pas paraître cherrypicker.
+Les modèles frontier sont estimés ~2-3× plus larges en paramètres actifs
+que Mistral Large 2, et le mix électrique US est ~7-8× plus carboné que
+le français (~400 gCO₂e/kWh AWS US-East vs 50 g pour le mix RTE).
+
+## Pourquoi VeraVoxa est aussi sobre
+
+Trois leviers combinés, qu'aucun concurrent n'aligne sur les trois :
+
+1. **Petit modèle** : `gpt-oss-120b` (120 milliards de paramètres) là où les
+   modèles frontier en font 200B-1T+ actifs. L'énergie par token scale
+   approximativement avec les paramètres activés.
+2. **Hardware sobre** : NVIDIA GB10 à 57 W mesuré, vs un H100/H200 à
+   ~700 W par accélérateur et 8 GPU par node DGX (~14 kW totaux par rack).
+3. **Mix électrique français** : 50 gCO₂e/kWh, vs ~250 g pour la moyenne
+   européenne, ~400 g pour le mix US moyen.
+
+La combinaison des trois aboutit à un ratio typique **300× à 500× plus
+sobre que GPT-4o / Claude Sonnet 4 via API US** pour la même tâche.
+
+## Limites assumées
+
+- La consommation à 57 W est un **majorant** observé — la moyenne réelle
+  sur une session est probablement 15-25 % en dessous (I/O, batching).
+- Le facteur grid 50 g/kWh est la **moyenne annuelle RTE** — la réalité
+  varie selon l'heure (10-15 g/kWh la nuit, jusqu'à 100 g en pic d'hiver).
+- La conversion "200 tokens par verbatim" est une moyenne — un verbatim
+  long ou un plan de codes volumineux peut doubler ce coût en tokens.
+- Les chiffres pour GPT-4o / Claude Sonnet 4 sont des **estimations**
+  sourcées mais non vérifiées par les fournisseurs.
+
+## Pourquoi pas d'analyste humain dans la comparaison ?
+
+Une version antérieure du rapport incluait un quatrième scénario "analyste
+humain équivalent" (~750 gCO₂/h, ~180 verbatims/h en France). Retiré
+parce que :
+
+- Méthodologie fragile : empreinte humaine professionnelle très dépendante
+  du mode de transport, du télétravail, des équipements personnels — peu
+  défendable face à un acheteur public ou un audit ESG
+- Comparaison non pertinente : on n'achète pas VeraVoxa pour remplacer un
+  humain mais pour traiter des volumes inaccessibles à un humain en temps
+  raisonnable
+- Risque éthique : afficher "nous émettons moins que le travail humain"
+  pourrait être lu comme une justification de remplacement
+
+La comparaison reste donc **machine vs machine** sur la même tâche.

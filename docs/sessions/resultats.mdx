@@ -1,0 +1,70 @@
+---
+sidebar_position: 4
+title: Résultats et téléchargement
+---
+
+# Résultats et téléchargement
+
+Une fois votre session terminée, VeraVoxa met à disposition un fichier Excel enrichi pour chaque service exécuté.
+
+## Télécharger les résultats
+
+Depuis la page de votre session :
+1. Repérez le service dont vous souhaitez les résultats.
+2. Cliquez sur **Télécharger** en regard du service.
+
+Le fichier téléchargé est votre Excel original, avec une ou plusieurs nouvelles colonnes ajoutées à droite.
+
+:::tip Nom du fichier
+VeraVoxa génère automatiquement un nom de fichier explicite, par exemple :
+`enquete_satisfaction_codification.xlsx`
+:::
+
+## Comprendre les nouvelles colonnes
+
+Chaque service ajoute une colonne portant le nom de la colonne source suivi d'un suffixe :
+
+| Service | Colonne ajoutée | Exemple |
+|---|---|---|
+| Codification | `{question}_codification` | `Q1_Satisfaction_codification` |
+| Codification (libellés) | `{question}_libelles` | `Q1_Satisfaction_libelles` |
+| Sentiment | `{question}_sentiment` | `Q1_Satisfaction_sentiment` |
+| Recodification de marques | `{question}_marque` | `Q3_Marques_marque` |
+| Traduction | `{question}_traduit` | `Q1_Satisfaction_traduit` |
+| Anonymisation | `{question}_anonymise` | `Q1_Satisfaction_anonymise` |
+| Correction orthographique | `{question}_corrige` | `Q1_Satisfaction_corrige` |
+
+## Exemple de fichier résultat (codification + sentiment)
+
+| ID | Q1_Satisfaction | Q1_Satisfaction_codification | Q1_Satisfaction_libelles | Q1_Satisfaction_sentiment |
+|---|---|---|---|---|
+| 1001 | Le service était rapide | 20 | Service rapide | Positif |
+| 1002 | Prix trop cher | 10 | Prix trop élevé | Négatif |
+| 1003 | Rien à signaler | 40 | Sans opinion | Neutre |
+
+## Plusieurs téléchargements disponibles
+
+Si votre session comprenait plusieurs services ou plusieurs questions, chaque combinaison génère un fichier séparé. Vous pouvez tous les télécharger indépendamment.
+
+## Résultats partiels
+
+Si votre session est encore en cours mais qu'un premier service est terminé, vous pouvez déjà télécharger ses résultats sans attendre la fin des autres.
+
+## Relancer une session
+
+Si un service a échoué ou si vous souhaitez modifier votre session :
+1. Depuis la page de la session, cliquez sur **Modifier**.
+2. Ajustez les paramètres souhaités.
+3. Relancez.
+
+Si le nouveau périmètre coûte plus cher, un complément de paiement vous est demandé. Si le coût est identique ou inférieur à ce qui a déjà été réglé, l'analyse redémarre immédiatement.
+
+## Résultats AutoPlan
+
+Le service AutoPlan produit un fichier Excel listant les thèmes découverts. En plus du bouton **Télécharger**, un bouton **Importer comme plan de code** apparaît : il crée directement un plan de codes réutilisable à partir des thèmes proposés.
+
+Voir [Importer le résultat AutoPlan comme plan de codes](/plans-de-codes#importer-le-résultat-autoplan-comme-plan-de-codes) pour le détail de cette procédure.
+
+## Conserver ses résultats
+
+Les fichiers résultats sont stockés sur VeraVoxa pendant **90 jours** après la fin de la session. Passé ce délai, ils sont supprimés automatiquement. Pensez à les sauvegarder sur votre poste ou votre espace de stockage habituel.
