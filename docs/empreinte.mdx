@@ -52,7 +52,7 @@ somme sur tous les jobs de la session.
 
 | Paramètre | Valeur | Source |
 |---|---|---|
-| TDP en charge | **57 W** | `nvidia-smi` mesuré sur NVIDIA GB10 (Grace Blackwell 10) en charge inférence vLLM batché |
+| TDP en charge | **57 W** | `nvidia-smi` mesuré sur NVIDIA (Grace Blackwell Light) en charge inférence vLLM batché |
 | Mix électrique | **50 gCO₂e/kWh** | RTE 2024, moyenne annuelle du mix électrique français (essentiellement nucléaire + hydraulique) |
 
 Hypothèses délibérément **conservatrices** :
@@ -81,7 +81,7 @@ en datacenter européen moyen.
 | Mix électrique | 300 gCO₂e/kWh | AIE 2024, moyenne européenne (mix gaz + nucléaire + renouvelables) |
 
 **Note sur la normalisation par GPU actif** : un rack DGX B200 traite la
-charge ~8× plus vite qu'un GB10 grâce à ses 8 GPU. Lui attribuer
+charge ~8× plus vite qu'un GB Light grâce à ses 8 GPU. Lui attribuer
 `14 kW × notre_durée` surestimerait sa conso d'un facteur 8 (on lui
 ferait payer la puissance des 7 GPU inutilisés). On normalise donc à
 **1 750 W équivalent par GPU actif**, ce qui revient à dire « 8 GPU
@@ -139,7 +139,7 @@ Trois leviers combinés, qu'aucun concurrent n'aligne sur les trois :
 1. **Petit modèle** : `gpt-oss-120b` (120 milliards de paramètres) là où les
    modèles frontier en font 200B-1T+ actifs. L'énergie par token scale
    approximativement avec les paramètres activés.
-2. **Hardware sobre** : NVIDIA GB10 à 57 W mesuré, vs un H100/H200 à
+2. **Hardware sobre** : NVIDIA GB Light à 57 W mesuré, vs un H100/H200 à
    ~700 W par accélérateur et 8 GPU par node DGX (~14 kW totaux par rack).
 3. **Mix électrique français** : 50 gCO₂e/kWh, vs ~250 g pour la moyenne
    européenne, ~400 g pour le mix US moyen.
