@@ -109,7 +109,7 @@ const config: Config = {
           items: [
             {
               label: 'Support',
-              href: 'mailto:support@veravoxa.com',
+              href: 'mailto:contact@socio-dm.com',
             },
             {
               label: 'SOCIO-DM',
